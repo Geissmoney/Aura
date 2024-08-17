@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   final List<Widget> _screens = [const FriendsHome(), const HomeScreen(), const Leaderboard()];
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   double ballSize = 100;
 
   late AnimationController _animationController;
