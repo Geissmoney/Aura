@@ -10,8 +10,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   final List<Widget> _screens = [const FriendsHome(), const HomeScreen(), const Leaderboard()];
   int _currentIndex = 0;
 
