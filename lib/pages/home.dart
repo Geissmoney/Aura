@@ -4,6 +4,7 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
@@ -26,10 +27,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple, // Set a custom background color
-        elevation: 10, // Adds shadow beneath the AppBar
+        backgroundColor: Colors.deepPurple, 
+        elevation: 10, 
         title: const Padding(
-        padding: EdgeInsets.only(top: 10.0),  // Adjust the padding value as needed
+        padding: EdgeInsets.only(top: 10.0), 
           child: Text(
             'Aura',
             style: TextStyle(
@@ -39,15 +40,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             ),
           ),
         ),
-        centerTitle: true, // Center the title
+        centerTitle: true,
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.amber, // Color of the tab indicator
-          labelColor: Colors.amber, // Color of the tab text when selected
-          unselectedLabelColor: Colors.white, // Color of the tab text when unselected
+          indicatorColor: Colors.amber, 
+          labelColor: Colors.amber, 
+          unselectedLabelColor: Colors.white, 
           tabs: const [
-            Tab(text: 'You'), // Tab 1
-            Tab(text: 'Friends') // Tab 2
+            Tab(text: 'You'),
+            Tab(text: 'Friends') 
           ],
         ),
       ),
