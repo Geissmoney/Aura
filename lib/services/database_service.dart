@@ -27,7 +27,7 @@ class DatabaseService {
   }
 
   // List of friend uids
-  Stream<List<String>> get friends {
+  List<String> getFriends {
     return userCollection
         .doc(uid)
         .collection('friends')
