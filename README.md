@@ -1,4 +1,4 @@
-# Aura
+# aura
 
 A new Flutter project.
 
