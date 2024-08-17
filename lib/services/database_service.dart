@@ -27,19 +27,19 @@ class DatabaseService {
   }
 
   // List of friend uids
-  List<String> getFriends {
-    return userCollection
-        .doc(uid)
-        .collection('friends')
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.where((doc) {
-        return doc.data()['status'] == 'friend';
-      }).map((doc) {
-        return doc.id;
-      }).toList();
-    });
-  }
+  // List<String> get Friends {
+  //   return userCollection
+  //       .doc(uid)
+  //       .collection('friends')
+  //       .snapshots()
+  //       .map((snapshot) {
+  //     return snapshot.docs.where((doc) {
+  //       return doc.data()['status'] == 'friend';
+  //     }).map((doc) {
+  //       return doc.id;
+  //     }).toList();
+  //   });
+  // }
 
   Stream<UserModel> userModelStream(String uid) {
     return userCollection.doc(uid).snapshots().map(

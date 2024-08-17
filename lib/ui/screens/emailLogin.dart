@@ -16,8 +16,20 @@ class _EmailLoginState extends State<EmailLogin> {
   String email = "";
 
   @override
+  @override
+  void initState() {
+    super.initState();
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     context.loaderOverlay.hide();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      if (FirebaseAuth.instance.currentUser != null) {
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         // leading: IconButton(
@@ -87,6 +99,12 @@ class _EmailLoginState extends State<EmailLogin> {
 
   Future<void> emailAuth(BuildContext context) async {
     context.loaderOverlay.show();
+    email = email.trim();
+    pass = pass.trim();
+    if (email.isEmpty || pass.isEmpty) {
+      context.loaderOverlay.hide();
+      return;
+    }
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
