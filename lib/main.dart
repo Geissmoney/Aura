@@ -23,6 +23,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          primaryColor: Colors.white,
+          hintColor: Colors.deepPurpleAccent,
+          buttonTheme: const ButtonThemeData(
+            buttonColor: Colors.deepPurple,
+            textTheme: ButtonTextTheme.primary,
+          ),
+          appBarTheme: const AppBarTheme(
+            color: Colors.white,
+            actionsIconTheme: IconThemeData(color: Colors.white),
+          ),
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: Colors.deepPurple,
+          ),
           fontFamily: "Poppins",
         ),
         home: const Auth());
