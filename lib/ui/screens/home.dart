@@ -8,7 +8,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -27,29 +28,26 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple, 
-        elevation: 10, 
+        backgroundColor: Colors.deepPurple,
+        elevation: 10,
         title: const Padding(
-        padding: EdgeInsets.only(top: 10.0), 
+          padding: EdgeInsets.only(top: 10.0),
           child: Text(
             'Aura',
             style: TextStyle(
-            color: Colors.white,
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
         centerTitle: true,
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.amber, 
-          labelColor: Colors.amber, 
-          unselectedLabelColor: Colors.white, 
-          tabs: const [
-            Tab(text: 'You'),
-            Tab(text: 'Friends') 
-          ],
+          indicatorColor: Colors.amber,
+          labelColor: Colors.amber,
+          unselectedLabelColor: Colors.white,
+          tabs: const [Tab(text: 'You'), Tab(text: 'Friends')],
         ),
       ),
       body: TabBarView(
@@ -64,4 +62,3 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 }
-
