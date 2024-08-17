@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'friends.dart';
+import 'leaderBoard.dart';
 import 'package:provider/provider.dart';
 import 'package:aura/services/database_service.dart';
 
@@ -9,8 +12,21 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  double ballSize = 100; // This can be dynamically adjusted as needed
+class _HomePageState extends State<HomePage> {
+  final List<Widget> _screens = [const FriendsHome(), const HomeScreen(), const Leaderboard()];
+  int _currentIndex = 0;
+  double ballSize = 100;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,23 +48,62 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Friends',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.leaderboard),
+            label: 'Leaderboard',
+          ),
+        ],
+      ),
+      body: _screens[_currentIndex],
+
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            const SizedBox(height: 20), // Top padding for the ball
-            CustomBallWidget(size: ballSize, label: "${ballSize.toInt()}"),
-            const SizedBox(height: 20), // Space between the ball and the cards
+            SizedBox(height: 20), // Top padding for the ball
+            CustomBallWidget(size: 50, label: "50"),
+            SizedBox(height: 20), // Space between the ball and the cards
             // Add your cards and other components here
-            const Card(
+            Card(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Text("Some information here"),
               ),
             ),
-            const Card(
+            Card(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Text("Another piece of information here"),
               ),
             ),
