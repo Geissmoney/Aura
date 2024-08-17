@@ -28,14 +28,14 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
+        // backgroundColor: Colors.deepPurple,
         elevation: 10,
         title: const Padding(
           padding: EdgeInsets.only(top: 10.0),
           child: Text(
             'Aura',
             style: TextStyle(
-              color: Colors.white,
+              // color: Colors.white,
               fontSize: 32,
               fontWeight: FontWeight.bold,
             ),
@@ -44,9 +44,9 @@ class _HomePageState extends State<HomePage>
         centerTitle: true,
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.amber,
-          labelColor: Colors.amber,
-          unselectedLabelColor: Colors.white,
+          // indicatorColor: Colors.amber,
+          // labelColor: Colors.amber,
+          // unselectedLabelColor: Colors.white,
           tabs: const [Tab(text: 'You'), Tab(text: 'Friends')],
         ),
       ),
