@@ -1,9 +1,11 @@
 import 'package:aura/firebase_options.dart';
 import 'package:aura/services/auth_service.dart';
 import 'package:aura/services/database_service.dart';
+import 'package:aura/ui/screens/emailLogin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 import 'ui/screens/home.dart';
 
@@ -20,25 +22,27 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.white,
-          hintColor: Colors.deepPurpleAccent,
-          buttonTheme: const ButtonThemeData(
-            buttonColor: Colors.deepPurple,
-            textTheme: ButtonTextTheme.primary,
+    return GlobalLoaderOverlay(
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: Colors.white,
+            hintColor: Colors.deepPurpleAccent,
+            buttonTheme: const ButtonThemeData(
+              buttonColor: Colors.deepPurple,
+              textTheme: ButtonTextTheme.primary,
+            ),
+            appBarTheme: const AppBarTheme(
+              color: Colors.white,
+              actionsIconTheme: IconThemeData(color: Colors.white),
+            ),
+            floatingActionButtonTheme: const FloatingActionButtonThemeData(
+              backgroundColor: Colors.deepPurple,
+            ),
+            fontFamily: "Poppins",
           ),
-          appBarTheme: const AppBarTheme(
-            color: Colors.white,
-            actionsIconTheme: IconThemeData(color: Colors.white),
-          ),
-          floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Colors.deepPurple,
-          ),
-          fontFamily: "Poppins",
-        ),
-        home: const Auth());
+          home: const Auth()),
+    );
   }
 }
 
@@ -55,18 +59,9 @@ class _AuthState extends State<Auth> {
     return StreamBuilder(
       stream: _auth.authState,
       builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
-        final User? user = snapshot.data;
+        User? user = null;
         if (user == null) {
-          // return const LoginPage(); TODO: Implement LoginPage
-          return Center(
-            child: MaterialButton(
-              color: Colors.blue,
-              child: const Text('Test sign in'),
-              onPressed: () async {
-                await _auth.signInAnon();
-              },
-            ),
-          );
+          return EmailLogin(); // TODO: Implement LoginPage
         } else {
           final databaseService = DatabaseService(uid: user.uid);
           return Provider<DatabaseService>(
