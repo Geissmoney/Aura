@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 
+import 'friends.dart';
+import 'leaderBoard.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+  final List<Widget> _screens = [const FriendsHome(), const HomeScreen(), const Leaderboard()];
+  int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    // _tabController.dispose();
     super.dispose();
   }
 
@@ -42,23 +44,46 @@ class _HomePageState extends State<HomePage>
           ),
         ),
         centerTitle: true,
-        bottom: TabBar(
-          controller: _tabController,
-          // indicatorColor: Colors.amber,
-          // labelColor: Colors.amber,
-          // unselectedLabelColor: Colors.white,
-          tabs: const [Tab(text: 'You'), Tab(text: 'Friends')],
-        ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          // Content for 'You' tab
-          Center(child: Text('Welcome to Your Page')),
-          // Content for 'Friends' tab
-          Center(child: Text('Friends Page')),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Friends',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.leaderboard),
+            label: 'Leaderboard',
+          ),
         ],
       ),
+      body: _screens[_currentIndex],
+
     );
   }
 }
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
