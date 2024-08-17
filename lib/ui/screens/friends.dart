@@ -20,6 +20,8 @@ class _FriendsHomeState extends State<FriendsHome> {
           ),
           Padding(padding: EdgeInsets.all(5.0)),
           Text("User Name", style: TextStyle(fontSize: 30),),
+          Padding(padding: EdgeInsets.all(20.0)),
+
         ],
       )
     );
