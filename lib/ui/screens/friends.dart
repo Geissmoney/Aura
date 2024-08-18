@@ -24,6 +24,15 @@ class _FriendsHomeState extends State<FriendsHome> {
     getFriends();
   }
 
+  Widget createRequest(List<String> uid) {
+
+    return Column(
+      children: [
+
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -40,7 +49,9 @@ class _FriendsHomeState extends State<FriendsHome> {
                     body: SizedBox(
                       width: MediaQuery.sizeOf(context).width * .7,
                       child: Column(
-                        children: [],
+                        children: [
+                          createRequest(_requests)
+                        ],
                       ),
                     )
 
