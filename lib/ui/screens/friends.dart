@@ -85,6 +85,8 @@ class _FriendsHomeState extends State<FriendsHome> {
             ),
             const Padding(padding: EdgeInsets.all(5.0)),
             Text(selfName, style: const TextStyle(fontSize: 30),),
+            const Padding(padding: EdgeInsets.all(5.0)),
+            Text("Username - ${selfName.substring(0,5).toLowerCase()}", style: const TextStyle(fontSize: 20),),
             const Padding(padding: EdgeInsets.all(20.0)),
             SizedBox(
               width: MediaQuery.sizeOf(context).width,
@@ -156,6 +158,4 @@ class _FriendsHomeState extends State<FriendsHome> {
       },
     );
   }
-
-
 }
