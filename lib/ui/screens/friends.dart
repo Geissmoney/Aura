@@ -1,7 +1,9 @@
+import 'package:aura/main.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class FriendsHome extends StatefulWidget {
   const FriendsHome({super.key});
@@ -12,6 +14,7 @@ class FriendsHome extends StatefulWidget {
 
 class _FriendsHomeState extends State<FriendsHome> {
   List<String> _friends = [];
+  List<String> _requests = [];
   String selfName = "";
   String addUsr = "";
 
@@ -27,10 +30,23 @@ class _FriendsHomeState extends State<FriendsHome> {
       child: Center(
         child:Column(
           children: [
-            // const Padding(padding: EdgeInsets.all(20.0)),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                IconButton(onPressed: (){
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.info,
+                    body: SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .7,
+                      child: Column(
+                        children: [],
+                      ),
+                    )
+
+                  ).show();
+                }, icon: const Icon(Icons.history_edu,size: 40,),),
+                Expanded(child: Container()),
                 IconButton(
                     onPressed: (){
                       AwesomeDialog(
@@ -46,11 +62,12 @@ class _FriendsHomeState extends State<FriendsHome> {
                               TextField(
                                 onChanged: ((value) {
                                   addUsr = value.toString();
+                                  sendRequest();
                                 }),
                                 keyboardType: TextInputType.text,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
-                                  labelText: 'Username - ',
+                                  labelText: 'Username',
                                 ),
                               )
                             ],
@@ -81,24 +98,49 @@ class _FriendsHomeState extends State<FriendsHome> {
   }
 
   sendRequest() async {
+    context.loaderOverlay.show();
     await FirebaseFirestore.instance
-        .collection('users').doc(FirebaseAuth.instance.currentUser?.uid.toString())
-        .collection('friends').add({
-      'status':'pending',
-      'usr' : addUsr,
-      'time' : DateTime.now(),
+        .collection('users').where('code',isEqualTo: addUsr).limit(1)
+        .get().then((event) async {
+          print(addUsr);
+          print("----------------------------------");
+          for (var doc in event.docs) {
+            await FirebaseFirestore.instance
+                .collection('users').doc(FirebaseAuth.instance.currentUser?.uid.toString())
+                .collection('friends').add({
+              'status':'pending',
+              'uid' : doc.id,
+              'time' : DateTime.now(),
+            });
+            await FirebaseFirestore.instance
+                .collection('users').doc(doc.id)
+                .collection('friends').add({
+              'status' : 'awaiting',
+              'uid' : FirebaseAuth.instance.currentUser?.uid,
+              'time' : DateTime.now(),
+            });
+          }
     });
+    context.loaderOverlay.hide();
   }
 
   getFriends() {
     setState(() {
       _friends.clear();
+      _requests.clear();
       selfName = FirebaseAuth.instance.currentUser!.displayName!;
       FirebaseFirestore.instance
           .collection('users').doc(FirebaseAuth.instance.currentUser?.uid.toString())
           .collection('friends').where('status', isEqualTo: 'accepted').get().then((event) {
         for (var doc in event.docs) {
           _friends.add(doc['uid']);
+        }
+      });
+      FirebaseFirestore.instance
+          .collection('users').doc(FirebaseAuth.instance.currentUser?.uid.toString())
+          .collection('friends').where('status', isEqualTo: 'awaiting').get().then((event) {
+        for (var doc in event.docs) {
+          _requests.add(doc['uid']);
         }
       });
     });

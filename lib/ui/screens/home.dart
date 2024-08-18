@@ -1,6 +1,9 @@
 import 'dart:ui';
 
+import 'package:aura/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 import 'friends.dart';
 import 'leaderBoard.dart';
@@ -70,6 +73,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return Scaffold(
       appBar: AppBar(
         elevation: 10,
+        actions: [
+          IconButton(onPressed: (){
+            context.loaderOverlay.show();
+            FirebaseAuth.instance.signOut();
+            Navigator.of(context).pushReplacementNamed('/');
+          }, icon: Icon(Icons.logout,color: Colors.black,))
+        ],
         title: const Padding(
           padding: EdgeInsets.only(top: 10.0),
           child: Text(
