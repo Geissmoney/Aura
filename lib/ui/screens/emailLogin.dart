@@ -84,6 +84,13 @@ class _EmailLoginState extends State<EmailLogin> {
                 keyboardType: TextInputType.visiblePassword,
               ),
               const Padding(padding: EdgeInsets.all(8)),
+              TextButton(
+                  onPressed: (){
+                    Navigator.pushNamed(context, '/signup');
+                  },
+                  child: const Text('New around here? Sign Up'),
+              ),
+              const Padding(padding: EdgeInsets.all(8)),
               ElevatedButton(
                 onPressed: () {
                   emailAuth(context);

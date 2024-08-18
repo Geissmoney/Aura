@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -81,9 +82,9 @@ class _EmailSignupState extends State<EmailSignup> {
                 const Padding(padding: EdgeInsets.all(8)),
                 ElevatedButton(
                   onPressed: () {
-                    // emailAuth(context);
+                    signUp(context);
                   },
-                  child: const Text('Login'),
+                  child: const Text('Welcome'),
                 ),
               ],
             )
@@ -106,6 +107,12 @@ class _EmailSignupState extends State<EmailSignup> {
         email: email,
         password: pass,
       );
+      await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid.toString()).set(
+          {
+            'name': name.toString(),
+            'aura': 0,
+            'code': name.substring(0,5),
+          });
       await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
       context.loaderOverlay.hide();
       Navigator.of(context).pushReplacementNamed('/home');
